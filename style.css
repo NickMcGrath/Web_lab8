@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Heebo|Roboto');
 body {
   margin: 0;
+  position: relative;
 }
 
 #wrapper {
@@ -44,16 +45,15 @@ nav ul li {
 
 #background {
   position: absolute;
-  top: 0;
   width: 100%;
-  height: 110%;
+  height: 103%;
   background: url(img/library.jpg) center/cover fixed;
   filter: contrast(80%) saturate(90%);
   z-index: -1;
 }
 
 #showcase {
-  height: 450px;
+  min-height: 370px;
 }
 
 #showcase h1 {
@@ -67,18 +67,18 @@ nav ul li {
 }
 
 #book_detail {
-  width: 70%;
+  height: 100%;
+  width: 80%;
   min-width: 500px;
   margin: 0 auto;
   padding: 30px 50px;
+  height: auto;
 }
 
 #book_detail img {
-  width: 30%;
-  min-width: 160px;
+  width: 200px;
   float: left;
   margin-right: 40px;
-  margin-top: 10px;
 }
 
 .title {
@@ -112,15 +112,15 @@ nav ul li {
 
 #categories {
   width: 100%;
-  background: rgba(255, 255, 255);
+  background: rgb(255, 255, 255);
   display: flex;
   justify-content: space-evenly;
 }
 
 #categories div {
   cursor: pointer;
-  font-size: 20px;
-  font-family: 'Heebo', sans-serif;
+  font-size: 16px;
+  font-family: 'Roboto', sans-serif;
   text-transform: capitalize;
   padding: 15px 16px 8px 16px;
 }

@@ -16,30 +16,29 @@ $('#categories div').on('click', function () {
   $(this).addClass('active');
 
   changeCategory($(this).text());
-})
+});
 
 function changeCategory(category) {
   var $covers = $('.row').find('.cover');
   for (let i = 0; i < 5; i++) {
     var cover = bookList[`${category}`][i].cover;
     $covers.eq(i).attr('src', cover).attr('id', `${category + "_" + i}`);
-  }
-}
+  };
+};
 
 /************************** Funtions for book detail  ******************************/
 
 // Books onclick listener
 $('.row').on('click', '.book', function () {
   displayBookDetail($(this))
-  checkExpanded();
-})
+});
 
 var $showcase = $('#showcase');
 
 function displayBookDetail(book) {
   $showcase.empty().css('background', 'rgba(255, 255, 255, 0.8)');
   createBookDetail(book);
-}
+};
 
 function createBookDetail(book) {
   $showcase.append('<div id="book_detail"></div>');
@@ -66,39 +65,27 @@ function createBookDetail(book) {
     $bookDetail.append(`<p class="description">${descriptionPart1} <span class="more">...more</span></p>`)
       .append(`<p id="hidden_description">${descriptionPart2}</p>`);
 
-    $bookDetail.find('#hidden_description').hide();
+    $bookDetail.find('#hidden_description').css('display', 'none');
   }
 }
-
-var expanded = false;
 
 $('#showcase').on('click', '.more', function () {
   var text = $('.description').text();
   var newText = text.substring(0, text.length - 8) + $('#hidden_description').text();
   $('.description').text(newText).append('<span class="less">(less)</span');
-  $showcase.css("height", "+=150px");
-  expanded = true;
 });
 
 $('#showcase').on('click', '.less', function () {
-  console.log("lesssss")
   var text = $('.description').text();
   var newText = text.substring(0, 850);
   $('.description').text(newText).append('<span class="more">...more</span>');
-  $showcase.css("height", "-=150px");
-  expanded = false;
 });
-
-function checkExpanded() {
-  if (expanded) {
-    $showcase.css("height", "-=150px");
-    expanded = false;
-  }
-}
-
 
 $('#home').on('click', function () {
   $showcase.empty().append('<h1>Meet your next favorite book.</h1>')
     .css('background', 'none');
-  checkExpanded()
+});
+
+$('#best2018').on('click', function () {
+
 });

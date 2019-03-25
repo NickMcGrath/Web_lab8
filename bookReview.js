@@ -15,11 +15,11 @@ $('#categories div').on('click', function () {
   $('.active').removeClass('active');
   $(this).addClass('active');
 
-  changeCategory($(this).text());
+  changeCategory($(this).text(), $('.row'));
 });
 
-function changeCategory(category) {
-  var $covers = $('.row').find('.cover');
+function changeCategory(category, row) {
+  var $covers = row.find('.cover');
   for (let i = 0; i < 5; i++) {
     var cover = bookList[`${category}`][i].cover;
     $covers.eq(i).attr('src', cover).attr('id', `${category + "_" + i}`);
@@ -29,8 +29,10 @@ function changeCategory(category) {
 /************************** Funtions for book detail  ******************************/
 
 // Books onclick listener
-$('.row').on('click', '.book', function () {
+$('#rows').on('click', '.book', function () {
   displayBookDetail($(this))
+  var category = $(this).children().attr('id').split('_')[0];
+  showHomePage(category);
 });
 
 var $showcase = $('#showcase');
@@ -84,8 +86,40 @@ $('#showcase').on('click', '.less', function () {
 $('#home').on('click', function () {
   $showcase.empty().append('<h1>Meet your next favorite book.</h1>')
     .css('background', 'none');
+  showHomePage('fiction');
 });
 
 $('#best2018').on('click', function () {
-
+  listAllCategories();
 });
+
+function showHomePage(category) {
+  $showcase.show();
+  $('#categories').show();
+  var $row = $('.row').eq(0);
+  $('#rows').empty().append($row);
+  changeCategory(category, $row)
+}
+
+function listAllCategories() {
+  var $rows = $('#rows');
+  var $rowCopy = $('.row').clone();
+
+  $showcase.hide();
+  $('#categories').hide();
+
+  $rows.prepend('<div class="category">best fiction</div>');
+  changeCategory('fiction', $('.row'));
+  $rows.append('<div class="category">best mystery&thriller</div>');
+  var $mystery = $rowCopy.clone();
+  changeCategory('mystery&thriller', $mystery);
+  $rows.append($mystery);
+  $rows.append('<div class="category">best horror</div>');
+  var $horror = $rowCopy.clone();
+  changeCategory('horror', $horror);
+  $rows.append($horror);
+  $rows.append('<div class="category">best fantasy</div>');
+  var $fantasy = $rowCopy.clone();
+  changeCategory('fantasy', $fantasy);
+  $rows.append($fantasy);
+}

@@ -35,7 +35,7 @@
     {
       "title": "The Outsider",
       "cover": "https://images.gr-assets.com/books/1524596540l/36124936.jpg",
-      "author": "Stephen King ",
+      "author": "Stephen King",
       "description": "An unspeakable crime. A confounding investigation. At a time when the King brand has never been stronger, he has delivered one of his most unsettling and compulsively readable stories. An eleven-year-old boy’s violated corpse is found in a town park. Eyewitnesses and fingerprints point unmistakably to one of Flint City’s most popular citizens. He is Terry Maitland, Little League coach, English teacher, husband, and father of two girls. Detective Ralph Anderson, whose son Maitland once coached, orders a quick and very public arrest. Maitland has an alibi, but Anderson and the district attorney soon add DNA evidence to go with the fingerprints and witnesses. Their case seems ironclad. As the investigation expands and horrifying answers begin to emerge, King’s propulsive story kicks into high gear, generating strong tension and almost unbearable suspense. Terry Maitland seems like a nice guy, but is he wearing another face? When the answer comes, it will shock you as only Stephen King can. "
     },
     {
@@ -61,6 +61,38 @@
       "cover": "https://images.gr-assets.com/books/1523891273l/35297426.jpg",
       "author": "Lisa Jewell",
       "description": "THEN She was fifteen, her mother's golden girl. She had her whole life ahead of her. And then, in the blink of an eye, Ellie was gone. NOW It’s been ten years since Ellie disappeared, but Laurel has never given up hope of finding her daughter. And then one day a charming and charismatic stranger called Floyd walks into a café and sweeps Laurel off her feet. Before too long she’s staying the night at this house and being introduced to his nine year old daughter. Poppy is precocious and pretty - and meeting her completely takes Laurel's breath away. Because Poppy is the spitting image of Ellie when she was that age. And now all those unanswered questions that have haunted Laurel come flooding back. What happened to Ellie? Where did she go? Who still has secrets to hide?"
+    }
+  ],
+  "horror": [
+    {
+      "title": "Elevation",
+      "cover": "https://images.gr-assets.com/books/1542040067l/38355410.jpg",
+      "author": "Stephen King",
+      "description": "The latest from legendary master storyteller Stephen King, a riveting, extraordinarily eerie, and moving story about a man whose mysterious affliction brings a small town together—a timely, upbeat tale about finding common ground despite deep-rooted differences. Although Scott Carey doesn’t look any different, he’s been steadily losing weight. There are a couple of other odd things, too. He weighs the same in his clothes and out of them, no matter how heavy they are. Scott doesn’t want to be poked and prodded. He mostly just wants someone else to know, and he trusts Doctor Bob Ellis. In the small town of Castle Rock, the setting of many of King’s most iconic stories, Scott is engaged in a low grade—but escalating—battle with the lesbians next door whose dog regularly drops his business on Scott’s lawn. One of the women is friendly; the other, cold as ice. Both are trying to launch a new restaurant, but the people of Castle Rock want no part of a gay married couple, and the place is in trouble. When Scott finally understands the prejudices they face–including his own—he tries to help. Unlikely alliances, the annual foot race, and the mystery of Scott’s affliction bring out the best in people who have indulged the worst in themselves and others."
+    },
+    {
+      "title": "Baby Teeth",
+      "cover": "https://images.gr-assets.com/books/1528990927l/35410511.jpg",
+      "author": "Zoje Stage",
+      "description": "Sweetness can be deceptive. Meet Hanna. She’s the sweet-but-silent angel in the adoring eyes of her Daddy. He’s the only person who understands her, and all Hanna wants is to live happily ever after with him. But Mommy stands in her way, and she’ll try any trick she can think of to get rid of her. Ideally for good. Meet Suzette. She loves her daughter, really, but after years of expulsions and strained home schooling, her precarious health and sanity are weakening day by day. As Hanna’s tricks become increasingly sophisticated, and Suzette's husband remains blind to the failing family dynamics, Suzette starts to fear that there’s something seriously wrong, and that maybe home isn’t the best place for their baby girl after all."
+    },
+    {
+      "title": "Dracul",
+      "cover": "https://images.gr-assets.com/books/1523747418l/38363799.jpg",
+      "author": "J.D. Barker",
+      "description": "The prequel to Dracula, inspired by notes and texts left behind by the author of the classic novel, Dracul is a supernatural thriller that reveals not only Dracula's true origins but Bram Stoker's--and the tale of the enigmatic woman who connects them. It is 1868, and a twenty-one-year-old Bram Stoker waits in a desolate tower to face an indescribable evil. Armed only with crucifixes, holy water, and a rifle, he prays to survive a single night, the longest of his life. Desperate to record what he has witnessed, Bram scribbles down the events that led him here... A sickly child, Bram spent his early days bedridden in his parents' Dublin home, tended to by his caretaker, a young woman named Ellen Crone. When a string of strange deaths occur in a nearby town, Bram and his sister Matilda detect a pattern of bizarre behavior by Ellen--a mystery that deepens chillingly until Ellen vanishes suddenly from their lives. Years later, Matilda returns from studying in Paris to tell Bram the news that she has seen Ellen--and that the nightmare they've thought long ended is only beginning."
+    },
+    {
+      "title": "The Passion of Cleopatra",
+      "cover": "https://images.gr-assets.com/books/1490228999l/34449265.jpg",
+      "author": "Anne Rice",
+      "description": "From the iconic and bestselling author of The Mummy and The Vampire Chronicles, a mesmerizing, glamorous new tale of ancient feuds and modern passions. Ramses the Great, former pharaoh of Egypt, is reawakened by the elixir of life in Edwardian England. Now immortal with his bride-to-be, he is swept up in a fierce and deadly battle of wills and psyches against the once-great Queen Cleopatra. Ramses has reawakened Cleopatra with the same perilous elixir whose unworldly force brings the dead back to life. But as these ancient rulers defy one another in their quest to understand the powers of the strange elixir, they are haunted by a mysterious presence even older and more powerful than they, a figure drawn forth from the mists of history who possesses spectacular magical potions and tonics eight millennia old. This is a figure who ruled over an ancient kingdom stretching from the once-fertile earth of the Sahara to the far corners of the world, a queen with a supreme knowledge of the deepest origins of the elixir of life. She may be the only one who can make known to Ramses and Cleopatra the key to their immortality--and the secrets of the miraculous, unknowable, endless expanse of the universe."
+    },
+    {
+      "title": "The Woman in the Woods",
+      "cover": "https://images.gr-assets.com/books/1523875174l/36373398.jpg",
+      "author": "John Connolly",
+      "description": "When the body of a woman—who apparently died in childbirth—is discovered, Parker is hired to track down both her identity and her missing child.In the beautiful Maine woods, a partly preserved body is discovered. Investigators realize that the dead young woman gave birth shortly before her death. But there is no sign of a baby. Private detective Charlie Parker is hired by a lawyer to shadow the police investigation and find the infant but Parker is not the only searcher. Someone else is following the trail left by the woman, someone with an interest in much more than a missing child…someone prepared to leave bodies in his wake. And in a house by the woods, a toy telephone begins to ring and a young boy is about to receive a call from a dead woman."
     }
   ]
 }

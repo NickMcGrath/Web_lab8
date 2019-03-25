@@ -1,5 +1,5 @@
 //  Assignment documentation
-// 1.	One client-side JavaScript script that will handle AJAX calls in the browser (external to the HTML)
+// 2.	One server-side JavaScript script that will answer requests and return JSON and HTML code
 
 // For this lab, you are going to get build a simple app with Node. So far, you’ve been shown Node.js, Express.js (and how to route), the HTTP methods (GET, POST), and how to download modules with NPM. 
 
@@ -18,14 +18,21 @@ const fs = require("fs");
 
 
 // respond to root url request with homepage
-app.get("/", function (req, res) {
-  let homepage = fs.readFileSync("markup.html", "utf8");
+app.get("/", function (request, response) {
+  let homepage = fs.readFileSync("bookReview.html", "utf8");
   res.send(homepage);
 });
 
 // ** was shown on example, unsure exactly what it does
 // app.use('/js', express.static('static/js'))
 // app.use('/css', express.static('static/css'))
+
+//sends a JSON file of books.json
+app.get('/bookReview-JSON', function (request, response) {
+  let booksListJSON = fs.readFileSync("/books.json", "JSON");
+  response.header("Content-Type", "application/json");
+  response.send(booksListJSON);
+});
 
 
 // run server

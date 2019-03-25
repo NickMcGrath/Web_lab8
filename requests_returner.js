@@ -1,1 +1,0 @@
-// 2.	One server-side JavaScript script that will answer requests and return JSON and HTML code

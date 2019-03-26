@@ -38,7 +38,7 @@ app.get("/get_bookList", function (request, response) {
   } else {
     response.sent({ msg: "Incorrect Format Requested" });
   }
-}
+});
 
 // ** was shown on example, unsure exactly what it does
 // app.use('/js', express.static('static/js'))
@@ -56,4 +56,4 @@ app.get("/get_bookList", function (request, response) {
 let port = 8000;
 app.listen(port, function () {
   console.log("App is listening on port: " + port);
-})
+});

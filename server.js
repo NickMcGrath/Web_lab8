@@ -6,7 +6,7 @@
 
 // from Web examples week 9 / week 10 / ajax-app.js 
 //  requires
-const lists = require('./core/data');
+const list = require('bookData');
 const express = require("express");
 // as of Express 4, you need this:
 // https://www.npmjs.com/package/body-parser
@@ -23,16 +23,33 @@ app.get("/", function (request, response) {
   res.send(homepage);
 });
 
+app.get("/get_bookList", function (request, response) {
+
+  //find the requested format
+  let formatOfResponse = request.query['format'];
+
+  if (formatOfResponse == "json-list") {
+    response.setHeader("Content-Type", "application/json");
+    response.send(list.getJSON);
+
+  } else if (formatOfResponse == "html-list") {
+    response.setHeader("Content-Type", "text/html");
+    response.send(list.getHTML);
+  } else {
+    response.sent({ msg: "Incorrect Format Requested" });
+  }
+}
+
 // ** was shown on example, unsure exactly what it does
 // app.use('/js', express.static('static/js'))
 // app.use('/css', express.static('static/css'))
 
 //sends a JSON file of books.json
-app.get('/bookReview-JSON', function (request, response) {
-  let booksListJSON = fs.readFileSync("/books.json", "JSON");
-  response.header("Content-Type", "application/json");
-  response.send(booksListJSON);
-});
+// app.get('/bookReview-JSON', function (request, response) {
+//   let booksListJSON = fs.readFileSync("/books.json", "JSON");
+//   response.header("Content-Type", "application/json");
+//   response.send(booksListJSON);
+// });
 
 
 // run server

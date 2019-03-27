@@ -10,79 +10,7 @@ $.getJSON('books.json').done(function (json) {
   }
 });
 
-// Categories onclick listener
-$('#categories div').on('click', function () {
-  $('.active').removeClass('active');
-  $(this).addClass('active');
-
-  changeCategory($(this).text(), $('.row'));
-});
-
-function changeCategory(category, row) {
-  var $covers = row.find('.cover');
-  for (let i = 0; i < 5; i++) {
-    var cover = bookList[`${category}`][i].cover;
-    $covers.eq(i).attr('src', cover).attr('id', `${category + "_" + i}`);
-  };
-};
-
-/************************** Funtions for book detail  ******************************/
-
-// Books onclick listener
-$('#rows').on('click', '.book', function () {
-  displayBookDetail($(this))
-  var category = $(this).children().attr('id').split('_')[0];
-  showHomePage(category);
-});
-
-var $showcase = $('#showcase');
-
-function displayBookDetail(book) {
-  $showcase.empty().css('background', 'rgba(255, 255, 255, 0.8)');
-  createBookDetail(book);
-};
-
-function createBookDetail(book) {
-  $showcase.append('<div id="book_detail"></div>');
-
-  var cover = book.children().attr('src');
-  var bookID = book.children().attr('id');
-  var category = bookID.split("_")[0];
-  var index = bookID.split("_")[1];
-  var description = bookList[category][index].description;
-  var $bookDetail = $showcase.find('#book_detail');
-  const lengthLimit = 850;
-
-  $bookDetail.append(`<img src="${cover}"></div>`)
-    .append(`<p class="title">${bookList[category][index].title}</p>`)
-    .append(`<p class="author">By ${bookList[category][index].author}</p>`);
-
-
-  if (description.length < lengthLimit) {
-    $bookDetail.append(`<p class="description">${description}</p>`);
-  } else {
-    var descriptionPart1 = description.substring(0, lengthLimit);
-    var descriptionPart2 = description.substring(lengthLimit, description.length);
-
-    $bookDetail.append(`<p class="description">${descriptionPart1} <span class="more">...more</span></p>`)
-      .append(`<p id="hidden_description">${descriptionPart2}</p>`);
-
-    $bookDetail.find('#hidden_description').css('display', 'none');
-  }
-}
-
-$('#showcase').on('click', '.more', function () {
-  var text = $('.description').text();
-  var newText = text.substring(0, text.length - 8) + $('#hidden_description').text();
-  $('.description').text(newText).append('<span class="less">(less)</span');
-});
-
-$('#showcase').on('click', '.less', function () {
-  var text = $('.description').text();
-  var newText = text.substring(0, 850);
-  $('.description').text(newText).append('<span class="more">...more</span>');
-});
-
+/************************ Functions for nav bar items **************************/
 $('#home').on('click', function () {
   $showcase.empty().append('<h1>Meet your next favorite book.</h1>')
     .css('background', 'none');
@@ -123,3 +51,86 @@ function listAllCategories() {
   changeCategory('fantasy', $fantasy);
   $rows.append($fantasy);
 }
+
+/************************** Funtions for categories  ******************************/
+
+// Categories onclick listener
+$('#categories div').on('click', function () {
+  $('.active').removeClass('active');
+  $(this).addClass('active');
+
+  changeCategory($(this).text(), $('.row'));
+});
+
+function changeCategory(category, row) {
+  var $covers = row.find('.cover');
+  for (let i = 0; i < 5; i++) {
+    var cover = bookList[`${category}`][i].cover;
+    $covers.eq(i).attr('src', cover).attr('id', `${category + "_" + i}`);
+  };
+};
+/************************** Funtions for book detail  ******************************/
+
+// Books onclick listener
+$('#rows').on('click', '.book', function () {
+  displayBookDetail($(this))
+  var category = $(this).children().attr('id').split('_')[0];
+  showHomePage(category);
+});
+
+var $showcase = $('#showcase');
+
+function displayBookDetail(book) {
+  $showcase.empty().css('background', 'rgba(255, 255, 255, 0.8)');
+  createBookDetail(book);
+};
+
+// Create the book detail layout in the showcase area
+function createBookDetail(book) {
+  $showcase.append('<div id="book_detail"></div>');
+
+  var bookID = book.children().attr('id');
+  var category = bookID.split("_")[0];
+  var index = bookID.split("_")[1];
+  var description = bookList[category][index].description;
+  var $bookDetail = $showcase.find('#book_detail');
+  var lengthLimit;
+  var windowWidth = $(window).width();
+
+  if (windowWidth < 750) {
+    lengthLimit = 400;
+  } else if (windowWidth < 900) {
+    lengthLimit = 600;
+  } else {
+    lengthLimit = 800;
+  }
+
+  $bookDetail.append(`<img src="${book.children().attr('src')}"></div>`)
+    .append(`<p class="title">${bookList[category][index].title}</p>`)
+    .append(`<p class="author">By ${bookList[category][index].author}</p>`);
+
+
+  if (description.length < lengthLimit) {
+    $bookDetail.append(`<p class="description">${description}</p>`);
+  } else {
+    var descriptionPart1 = description.substring(0, lengthLimit);
+    var descriptionPart2 = description.substring(lengthLimit, description.length);
+
+    $bookDetail.append(`<p class="description">${descriptionPart1} <span class="more">...more</span></p>`)
+      .append(`<p id="hidden_description">${descriptionPart2}</p>`);
+
+    $bookDetail.find('#hidden_description').css('display', 'none');
+  }
+}
+
+$('#showcase').on('click', '.more', function () {
+  var text = $('.description').text();
+  var newText = text.substring(0, text.length - 8) + $('#hidden_description').text();
+  $('.description').text(newText).append('<span class="less">(less)</span');
+});
+
+$('#showcase').on('click', '.less', function () {
+  var text = $('.description').text();
+  var newText = text.substring(0, 850);
+  $('.description').text(newText).append('<span class="more">...more</span>');
+});

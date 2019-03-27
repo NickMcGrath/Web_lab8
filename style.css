@@ -38,9 +38,9 @@ nav ul {
 }
 
 nav ul li {
+  cursor: pointer;
   display: inline;
   padding: 0 30px;
-  cursor: pointer;
 }
 
 #background {
@@ -80,6 +80,7 @@ nav ul li {
   width: 200px;
   float: left;
   margin-right: 40px;
+  box-shadow: 4px 4px 8px 2px rgb(139, 139, 139, 0.8);
 }
 
 .title {
@@ -103,7 +104,6 @@ nav ul li {
 }
 
 .description span {
-  cursor: pointer;
   color: rgb(0, 163, 155);
 }
 
@@ -113,9 +113,12 @@ nav ul li {
 
 #categories {
   width: 100%;
-  background: rgb(255, 255, 255);
+  background: rgb(80, 80, 80);
+  color: white;
   display: flex;
   justify-content: space-evenly;
+  box-shadow: 0 2px 2px 1px rgb(139, 139, 139, 0.6);
+  position: relative;
 }
 
 #categories div {
@@ -127,12 +130,15 @@ nav ul li {
 }
 
 .category {
-  height: 30px;
-  background: white;
+  height: 35px;
+  background: rgb(80, 80, 80);
+  color: white;
   font-size: 18px;
   font-family: 'Roboto', sans-serif;
   text-transform: capitalize;
-  padding: 8px 0 0 35px;
+  padding: 13px 0 0 35px;
+  box-shadow: 0 2px 2px 1px rgb(139, 139, 139, 0.6);
+  position: relative;
 }
 
 #categories div:hover {
@@ -161,6 +167,66 @@ nav ul li {
 
 .book img {
   width: 100%;
+  box-shadow: 4px 4px 8px 2px rgb(139, 139, 139, 0.8);
 }
 
-@media only screen and (max-width: 1200px) {}
+@media only screen and (max-width: 750px) {
+  nav {
+    height: 50px;
+  }
+  nav img {
+    width: 50px;
+    height: 50px;
+  }
+  nav p {
+    font-size: 18px;
+  }
+  nav ul li {
+    font-size: 14px;
+    padding: 0 20px;
+  }
+  #showcase {
+    min-height: 330px;
+  }
+  #showcase h1 {
+    font-size: 30px;
+  }
+  #book_detail img {
+    width: 150px;
+  }
+  .title {
+    font-size: 31px;
+  }
+  .author {
+    font-size: 20px;
+  }
+  .description {
+    font-size: 15px;
+  }
+  #categories div {
+    font-size: 14px;
+  }
+  .category {
+    font-size: 16px;
+    height: 30px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  #showcase {
+    min-height: 280px;
+  }
+  #book_detail img {
+    width: 120px;
+  }
+  .title {
+    padding-top: 40px;
+
+  }
+  .author {
+  }
+  .description {
+    padding-top: 20px;
+    clear: both;
+  }
+}

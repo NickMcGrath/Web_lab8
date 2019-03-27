@@ -1,7 +1,7 @@
 var bookList;
 
 // Importing data by jquery, should do by Node.js
-$.getJSON('books.json').done(function (json) {
+$.getJSON('js/books.json').done(function (json) {
   bookList = json;
   var $row = $('.row');
   for (let i = 0; i < 5; i++) {

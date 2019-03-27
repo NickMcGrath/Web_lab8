@@ -6,7 +6,7 @@
 
 // from Web examples week 9 / week 10 / ajax-app.js 
 //  requires
-const list = require('bookData');
+const firebase = require('./firebaseHandler.js');
 const express = require("express");
 // as of Express 4, you need this:
 // https://www.npmjs.com/package/body-parser
@@ -19,9 +19,17 @@ const fs = require("fs");
 
 // respond to root url request with homepage
 app.get("/", function (request, response) {
-  let homepage = fs.readFileSync("bookReview.html", "utf8");
-  res.send(homepage);
+  let homepage = fs.readFileSync("./static/html/bookReview.html", "utf8");
+  let fantasyTest = firebase.getFantasyJSON();
+  console.log(fantasyTest);
+  response.send(homepage);
 });
+
+//used in example
+app.use('/js', express.static('static/js'));
+app.use('/css', express.static('static/css'));
+app.use('/img', express.static('static/img'));
+
 
 app.get("/get_bookList", function (request, response) {
 

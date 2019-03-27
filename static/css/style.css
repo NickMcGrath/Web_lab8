@@ -48,7 +48,7 @@ nav ul li {
   width: 100%;
   min-height: 100vh;
   height: 100%;
-  background: url(img/library.jpg) center/cover fixed;
+  background: url(../img/library.jpg) center/cover fixed;
   filter: contrast(80%) saturate(90%);
   z-index: -1;
 }

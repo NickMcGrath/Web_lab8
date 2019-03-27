@@ -5,7 +5,7 @@ var firebase = require("firebase");
 //import firebase from "firebase";
 module.exports = {
     getFantasyJSON: function () {
-        return grabFantasyJSON;
+        return grabFantasyJSON();
     },
     getFictionJSON: function () {
         return // * to do add return
@@ -32,7 +32,13 @@ var database = firebase.database();
 var grabFantasyJSON = function () {
     let dbRef = firebase.database().ref("fantasy");
     console.log(dbRef);
-    return dbRef
+    var promise = dbRef.once("value", function (snap) {
+        list = snap.val();
+        console.log(snap.val());
+    });
+    promise.then(function () {
+        return list;
+    })
 
 }
 var grabFictionJSON = function () {

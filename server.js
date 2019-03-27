@@ -6,7 +6,8 @@
 
 // from Web examples week 9 / week 10 / ajax-app.js 
 //  requires
-const firebase = require('./firebaseHandler.js');
+var firebase = require("firebase");
+//const firebase = require('./firebaseHandler.js');
 const express = require("express");
 // as of Express 4, you need this:
 // https://www.npmjs.com/package/body-parser
@@ -20,37 +21,31 @@ const fs = require("fs");
 // respond to root url request with homepage
 app.get("/", function (request, response) {
   let homepage = fs.readFileSync("./static/html/bookReview.html", "utf8");
-  let fantasyTest = firebase.getFantasyJSON();
-  console.log(fantasyTest);
+  //grabFantasyJSON();
   response.send(homepage);
 });
 
-//used in example
 app.use('/js', express.static('static/js'));
 app.use('/css', express.static('static/css'));
 app.use('/img', express.static('static/img'));
 
 
-app.get("/get_bookList", function (request, response) {
+// app.get("/get_bookList", function (request, response) {
 
-  //find the requested format
-  let formatOfResponse = request.query['format'];
+//   //find the requested format
+//   let formatOfResponse = request.query['format'];
 
-  if (formatOfResponse == "json-list") {
-    response.setHeader("Content-Type", "application/json");
-    response.send(list.getJSON);
+//   if (formatOfResponse == "json-list") {
+//     response.setHeader("Content-Type", "application/json");
+//     response.send(list.getJSON);
 
-  } else if (formatOfResponse == "html-list") {
-    response.setHeader("Content-Type", "text/html");
-    response.send(list.getHTML);
-  } else {
-    response.sent({ msg: "Incorrect Format Requested" });
-  }
-});
-
-// ** was shown on example, unsure exactly what it does
-// app.use('/js', express.static('static/js'))
-// app.use('/css', express.static('static/css'))
+//   } else if (formatOfResponse == "html-list") {
+//     response.setHeader("Content-Type", "text/html");
+//     response.send(list.getHTML);
+//   } else {
+//     response.sent({ msg: "Incorrect Format Requested" });
+//   }
+// });
 
 //sends a JSON file of books.json
 // app.get('/bookReview-JSON', function (request, response) {
@@ -65,3 +60,30 @@ let port = 8000;
 app.listen(port, function () {
   console.log("App is listening on port: " + port);
 });
+
+
+//firebase 
+var config = {
+  apiKey: "AIzaSyC1vdsdqR3xku17VLLTGgcyJOENjtH9Nb4",
+  authDomain: "lab-8-book-review.firebaseapp.com",
+  databaseURL: "https://lab-8-book-review.firebaseio.com",
+  projectId: "lab-8-book-review",
+  storageBucket: "lab-8-book-review.appspot.com",
+  messagingSenderId: "955822866019"
+};
+firebase.initializeApp(config);
+
+var database = firebase.database();
+
+// var grabFantasyJSON = function () {
+//   let dbRef = firebase.database().ref("fantasy");
+//   console.log(dbRef);
+//   var promise = dbRef.once("value", function (snap) {
+//     list = snap.val();
+//     console.log(snap.val());
+//   });
+//   promise.then(function () {
+//     return list;
+//   })
+//
+// }

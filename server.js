@@ -33,10 +33,9 @@ app.get('/fantasyJSON', function (request, response) {
   response.header("Content-Type", "application/json");
   var db = admin.database();
   var ref = db.ref("fantasy");
-  var fantasy = ref.once("value", function (snapshot) {
+  ref.once("value", function (snapshot) {
     response.send(snapshot.val());
   });
-  console.log(fantasy);
 });
 
 //sends a fantasy JSON file on /fantasyJSON request
@@ -44,10 +43,9 @@ app.get('/fictionJSON', function (request, response) {
   response.header("Content-Type", "application/json");
   var db = admin.database();
   var ref = db.ref("fiction");
-  var fantasy = ref.once("value", function (snapshot) {
+  ref.once("value", function (snapshot) {
     response.send(snapshot.val());
   });
-  console.log(fantasy);
 });
 
 

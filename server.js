@@ -6,8 +6,7 @@
 
 // from Web examples week 9 / week 10 / ajax-app.js 
 //  requires
-var firebase = require("firebase");
-//const firebase = require('./firebaseHandler.js');
+const firebase = require("firebase");
 const express = require("express");
 // as of Express 4, you need this:
 // https://www.npmjs.com/package/body-parser
@@ -21,7 +20,6 @@ const fs = require("fs");
 // respond to root url request with homepage
 app.get("/", function (request, response) {
   let homepage = fs.readFileSync("./static/html/bookReview.html", "utf8");
-  //grabFantasyJSON();
   response.send(homepage);
 });
 
@@ -30,29 +28,26 @@ app.use('/css', express.static('static/css'));
 app.use('/img', express.static('static/img'));
 
 
-// app.get("/get_bookList", function (request, response) {
+//sends a fantasy JSON file on /fantasyJSON request
+app.get('/fantasyJSON', function (request, response) {
+  response.header("Content-Type", "application/json");
+  var db = admin.database();
+  var ref = db.ref("fantasy");
+  ref.once("value", function (snapshot) {
+    response.send(snapshot.val());
+  });
+});
 
-//   //find the requested format
-//   let formatOfResponse = request.query['format'];
+//sends a fantasy JSON file on /fantasyJSON request
+app.get('/fictionJSON', function (request, response) {
+  response.header("Content-Type", "application/json");
+  var db = admin.database();
+  var ref = db.ref("fiction");
+  ref.once("value", function (snapshot) {
+    response.send(snapshot.val());
+  });
+});
 
-//   if (formatOfResponse == "json-list") {
-//     response.setHeader("Content-Type", "application/json");
-//     response.send(list.getJSON);
-
-//   } else if (formatOfResponse == "html-list") {
-//     response.setHeader("Content-Type", "text/html");
-//     response.send(list.getHTML);
-//   } else {
-//     response.sent({ msg: "Incorrect Format Requested" });
-//   }
-// });
-
-//sends a JSON file of books.json
-// app.get('/bookReview-JSON', function (request, response) {
-//   let booksListJSON = fs.readFileSync("/books.json", "JSON");
-//   response.header("Content-Type", "application/json");
-//   response.send(booksListJSON);
-// });
 
 
 // run server
@@ -62,28 +57,11 @@ app.listen(port, function () {
 });
 
 
-//firebase 
-var config = {
-  apiKey: "AIzaSyC1vdsdqR3xku17VLLTGgcyJOENjtH9Nb4",
-  authDomain: "lab-8-book-review.firebaseapp.com",
-  databaseURL: "https://lab-8-book-review.firebaseio.com",
-  projectId: "lab-8-book-review",
-  storageBucket: "lab-8-book-review.appspot.com",
-  messagingSenderId: "955822866019"
-};
-firebase.initializeApp(config);
+//firebase
+var admin = require("firebase-admin");
+var serviceAccount = require("./core/serviceAccountKey");
 
-var database = firebase.database();
-
-// var grabFantasyJSON = function () {
-//   let dbRef = firebase.database().ref("fantasy");
-//   console.log(dbRef);
-//   var promise = dbRef.once("value", function (snap) {
-//     list = snap.val();
-//     console.log(snap.val());
-//   });
-//   promise.then(function () {
-//     return list;
-//   })
-//
-// }
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://lab-8-book-review.firebaseio.com"
+});

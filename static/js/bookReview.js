@@ -134,3 +134,69 @@ $('#showcase').on('click', '.less', function () {
   var newText = text.substring(0, 850);
   $('.description').text(newText).append('<span class="more">...more</span>');
 });
+
+$('#home').on('click', function () {
+  $showcase.empty().append('<h1>Meet your next favorite book.</h1>')
+    .css('background', 'none');
+  showHomePage('fiction');
+});
+
+$('#best2018').on('click', function () {
+  listAllCategories();
+});
+
+function showHomePage(category) {
+  $showcase.show();
+  $('#categories').show();
+  var $row = $('.row').eq(0);
+  $('#rows').empty().append($row);
+  changeCategory(category, $row)
+}
+
+function listAllCategories() {
+  var $rows = $('#rows');
+  var $rowCopy = $('.row').clone();
+
+  $showcase.hide();
+  $('#categories').hide();
+
+  $rows.prepend('<div class="category">best fiction</div>');
+  changeCategory('fiction', $('.row'));
+  $rows.append('<div class="category">best mystery&thriller</div>');
+  var $mystery = $rowCopy.clone();
+  changeCategory('mystery&thriller', $mystery);
+  $rows.append($mystery);
+  $rows.append('<div class="category">best horror</div>');
+  var $horror = $rowCopy.clone();
+  changeCategory('horror', $horror);
+  $rows.append($horror);
+  $rows.append('<div class="category">best fantasy</div>');
+  var $fantasy = $rowCopy.clone();
+  changeCategory('fantasy', $fantasy);
+  $rows.append($fantasy);
+}
+
+
+// AJAX calls  
+//testing with clink on title
+$('bodynav p').click(function (e) {
+
+  // don't allow the anchor to visit the link
+  e.preventDefault();
+
+  $.ajax({
+    url: "/get_bookList",
+    dataType: "json",
+    type: "GET",
+    success: function (data) {
+      $("#p1").text(data['msg']);
+      console.log("SUCCESS:", data);
+
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      $("#p1").text(jqXHR.statusText);
+      console.log("ERROR:", jqXHR, textStatus, errorThrown);
+    }
+
+  });
+});

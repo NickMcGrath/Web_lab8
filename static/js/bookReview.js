@@ -123,3 +123,28 @@ function listAllCategories() {
   changeCategory('fantasy', $fantasy);
   $rows.append($fantasy);
 }
+
+
+// AJAX calls  
+//testing with clink on title
+$('bodynav p').click(function (e) {
+
+  // don't allow the anchor to visit the link
+  e.preventDefault();
+
+  $.ajax({
+    url: "/get_bookList",
+    dataType: "json",
+    type: "GET",
+    success: function (data) {
+      $("#p1").text(data['msg']);
+      console.log("SUCCESS:", data);
+
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      $("#p1").text(jqXHR.statusText);
+      console.log("ERROR:", jqXHR, textStatus, errorThrown);
+    }
+
+  });
+});

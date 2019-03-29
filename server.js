@@ -48,9 +48,9 @@ app.get('/fictionJSON', function (request, response) {
   });
 });
 
-//get horror json and convert to html then send 
+//to do **get horror json and convert to html then send 
 
-
+//to do ** 404 
 
 
 // run server

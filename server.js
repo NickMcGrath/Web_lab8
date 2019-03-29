@@ -1,21 +1,21 @@
-//  Assignment documentation
-// 2.	One server-side JavaScript script that will answer requests and return JSON and HTML code
-
-// For this lab, you are going to get build a simple app with Node. So far, you’ve been shown Node.js, Express.js (and how to route), the HTTP methods (GET, POST), and how to download modules with NPM. 
-
-
-// from Web examples week 9 / week 10 / ajax-app.js 
-//  requires
-const firebase = require("firebase");
-const express = require("express");
-// as of Express 4, you need this:
-// https://www.npmjs.com/package/body-parser
-const bodyParser = require('body-parser');
+const express = require('express');
 const app = express();
-// https://www.npmjs.com/package/jsdom
-const { JSDOM } = require('jsdom');
-const fs = require("fs");
+const fs = require('fs')
+const firebase = require('firebase');
+const config = {
+  apiKey: "AIzaSyC1vdsdqR3xku17VLLTGgcyJOENjtH9Nb4",
+  authDomain: "lab-8-book-review.firebaseapp.com",
+  databaseURL: "https://lab-8-book-review.firebaseio.com",
+  projectId: "lab-8-book-review",
+  storageBucket: "lab-8-book-review.appspot.com",
+  messagingSenderId: "955822866019"
+};
+firebase.initializeApp(config);
+var database = firebase.database();
 
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 // respond to root url request with homepage
 app.get("/", function (request, response) {
@@ -28,40 +28,17 @@ app.use('/css', express.static('static/css'));
 app.use('/img', express.static('static/img'));
 
 
-//sends a fantasy JSON file on /fantasyJSON request
-app.get('/fantasyJSON', function (request, response) {
-  response.header("Content-Type", "application/json");
-  var db = admin.database();
-  var ref = db.ref("fantasy");
-  ref.once("value", function (snapshot) {
-    response.send(snapshot.val());
+app.get('/get_bookList', function (req, res) {
+  let category = req.query['category'];
+
+  res.setHeader('Content-Type', 'application/json');
+  database.ref(category).once('value').then(function (snap) {
+    res.send(snap.val());
   });
 });
-
-//sends a fantasy JSON file on /fantasyJSON request
-app.get('/fictionJSON', function (request, response) {
-  response.header("Content-Type", "application/json");
-  var db = admin.database();
-  var ref = db.ref("fiction");
-  ref.once("value", function (snapshot) {
-    response.send(snapshot.val());
-  });
-});
-
-
 
 // run server
 let port = 8000;
 app.listen(port, function () {
   console.log("App is listening on port: " + port);
-});
-
-
-//firebase
-var admin = require("firebase-admin");
-var serviceAccount = require("./core/serviceAccountKey");
-
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://lab-8-book-review.firebaseio.com"
 });

@@ -1,14 +1,23 @@
-var bookList;
+// Create row of fiction books as default
+$.ajax({
+  url: "/get_bookList",
+  dataType: "json",
+  type: "GET",
+  data: { category: "fiction" },
+  success: function (data) {
+    console.log("SUCCESS:", data);
+    var $row = $('.row');
+    for (let i = 0; i < 5; i++) {
+      var cover = data[i].cover;
+      $row.append(`<div class="book"><img class="cover" id="${"fiction_" + i}" src="${cover}"></div>`)
+    }
 
-// Importing data by jquery, should do by Node.js
-$.getJSON('js/books.json').done(function (json) {
-  bookList = json;
-  var $row = $('.row');
-  for (let i = 0; i < 5; i++) {
-    var cover = bookList['fiction'][i].cover;
-    $row.append(`<div class="book"><img class="cover" id="${"fiction_" + i}" src="${cover}"></div>`)
+  },
+  error: function (jqXHR, textStatus, errorThrown) {
+    console.log("ERROR:", jqXHR, textStatus, errorThrown);
   }
 });
+
 
 /************************ Functions for nav bar items **************************/
 $('#home').on('click', function () {
@@ -26,7 +35,9 @@ function showHomePage(category) {
   $('#categories').show();
   var $row = $('.row').eq(0);
   $('#rows').empty().append($row);
-  changeCategory(category, $row)
+  getBooks(category, (data) => {
+    changeCategory(category, data, $row)
+  });
 }
 
 function listAllCategories() {
@@ -37,18 +48,29 @@ function listAllCategories() {
   $('#categories').hide();
 
   $rows.prepend('<div class="category">best fiction</div>');
-  changeCategory('fiction', $('.row'));
+  getBooks('fiction', (data) => {
+    changeCategory('fiction', data, $('.row'))
+  });
+
   $rows.append('<div class="category">best mystery&thriller</div>');
   var $mystery = $rowCopy.clone();
-  changeCategory('mystery&thriller', $mystery);
+  getBooks('mystery&thriller', (data) => {
+    changeCategory('mystery&thriller', data, $mystery)
+  });
   $rows.append($mystery);
+
   $rows.append('<div class="category">best horror</div>');
   var $horror = $rowCopy.clone();
-  changeCategory('horror', $horror);
+  getBooks('horror', (data) => {
+    changeCategory('horror', data, $horror)
+  });
   $rows.append($horror);
+
   $rows.append('<div class="category">best fantasy</div>');
   var $fantasy = $rowCopy.clone();
-  changeCategory('fantasy', $fantasy);
+  getBooks('fantasy', (data) => {
+    changeCategory('fantasy', data, $fantasy)
+  });
   $rows.append($fantasy);
 }
 
@@ -58,14 +80,16 @@ function listAllCategories() {
 $('#categories div').on('click', function () {
   $('.active').removeClass('active');
   $(this).addClass('active');
-
-  changeCategory($(this).text(), $('.row'));
+  let category = $(this).text();
+  getBooks(category, (data) => {
+    changeCategory(category, data, $('.row'))
+  });
 });
 
-function changeCategory(category, row) {
+function changeCategory(category, books, row) {
   var $covers = row.find('.cover');
   for (let i = 0; i < 5; i++) {
-    var cover = bookList[`${category}`][i].cover;
+    var cover = books[i].cover;
     $covers.eq(i).attr('src', cover).attr('id', `${category + "_" + i}`);
   };
 };
@@ -92,7 +116,6 @@ function createBookDetail(book) {
   var bookID = book.children().attr('id');
   var category = bookID.split("_")[0];
   var index = bookID.split("_")[1];
-  var description = bookList[category][index].description;
   var $bookDetail = $showcase.find('#book_detail');
   var lengthLimit;
   var windowWidth = $(window).width();
@@ -105,24 +128,28 @@ function createBookDetail(book) {
     lengthLimit = 800;
   }
 
-  $bookDetail.append(`<img src="${book.children().attr('src')}"></div>`)
-    .append(`<p class="title">${bookList[category][index].title}</p>`)
-    .append(`<p class="author">By ${bookList[category][index].author}</p>`);
+  getBooks(category, (books) => {
+    var description = books[index].description;
 
+    $bookDetail.append(`<img src="${book.children().attr('src')}"></div>`)
+      .append(`<p class="title">${books[index].title}</p>`)
+      .append(`<p class="author">By ${books[index].author}</p>`);
 
-  if (description.length < lengthLimit) {
-    $bookDetail.append(`<p class="description">${description}</p>`);
-  } else {
-    var descriptionPart1 = description.substring(0, lengthLimit);
-    var descriptionPart2 = description.substring(lengthLimit, description.length);
+    if (description.length < lengthLimit) {
+      $bookDetail.append(`<p class="description">${description}</p>`);
+    } else {
+      var descriptionPart1 = description.substring(0, lengthLimit);
+      var descriptionPart2 = description.substring(lengthLimit, description.length);
 
-    $bookDetail.append(`<p class="description">${descriptionPart1} <span class="more">...more</span></p>`)
-      .append(`<p id="hidden_description">${descriptionPart2}</p>`);
+      $bookDetail.append(`<p class="description">${descriptionPart1} <span class="more">...more</span></p>`)
+        .append(`<p id="hidden_description">${descriptionPart2}</p>`);
 
-    $bookDetail.find('#hidden_description').css('display', 'none');
-  }
-}
+      $bookDetail.find('#hidden_description').css('display', 'none');
+    };
+  });
+};
 
+// Click eventlistener for more and less on book description
 $('#showcase').on('click', '.more', function () {
   var text = $('.description').text();
   var newText = text.substring(0, text.length - 8) + $('#hidden_description').text();
@@ -135,68 +162,19 @@ $('#showcase').on('click', '.less', function () {
   $('.description').text(newText).append('<span class="more">...more</span>');
 });
 
-$('#home').on('click', function () {
-  $showcase.empty().append('<h1>Meet your next favorite book.</h1>')
-    .css('background', 'none');
-  showHomePage('fiction');
-});
-
-$('#best2018').on('click', function () {
-  listAllCategories();
-});
-
-function showHomePage(category) {
-  $showcase.show();
-  $('#categories').show();
-  var $row = $('.row').eq(0);
-  $('#rows').empty().append($row);
-  changeCategory(category, $row)
-}
-
-function listAllCategories() {
-  var $rows = $('#rows');
-  var $rowCopy = $('.row').clone();
-
-  $showcase.hide();
-  $('#categories').hide();
-
-  $rows.prepend('<div class="category">best fiction</div>');
-  changeCategory('fiction', $('.row'));
-  $rows.append('<div class="category">best mystery&thriller</div>');
-  var $mystery = $rowCopy.clone();
-  changeCategory('mystery&thriller', $mystery);
-  $rows.append($mystery);
-  $rows.append('<div class="category">best horror</div>');
-  var $horror = $rowCopy.clone();
-  changeCategory('horror', $horror);
-  $rows.append($horror);
-  $rows.append('<div class="category">best fantasy</div>');
-  var $fantasy = $rowCopy.clone();
-  changeCategory('fantasy', $fantasy);
-  $rows.append($fantasy);
-}
-
-
-// AJAX calls  
-//testing with clink on title
-$('bodynav p').click(function (e) {
-
-  // don't allow the anchor to visit the link
-  e.preventDefault();
-
+// AJAX call
+function getBooks(category, callback) {
   $.ajax({
     url: "/get_bookList",
     dataType: "json",
     type: "GET",
+    data: { category: category },
     success: function (data) {
-      $("#p1").text(data['msg']);
       console.log("SUCCESS:", data);
-
+      callback(data);
     },
     error: function (jqXHR, textStatus, errorThrown) {
-      $("#p1").text(jqXHR.statusText);
       console.log("ERROR:", jqXHR, textStatus, errorThrown);
     }
-
   });
-});
+}

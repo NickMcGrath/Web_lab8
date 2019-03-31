@@ -3,7 +3,10 @@ $.ajax({
   url: "/get_bookList",
   dataType: "json",
   type: "GET",
-  data: { category: "fiction" },
+  data: {
+    format: "json",
+    category: "fiction"
+  },
   success: function (data) {
     console.log("SUCCESS:", data);
     var $row = $('.row');
@@ -18,18 +21,24 @@ $.ajax({
   }
 });
 
-
 /************************ Functions for nav bar items **************************/
+var onListingPage = false;
+
 $('#icon').on('click', function () {
+  changeActiveIndicator('fiction');
   showHomePage('fiction');
 });
 
 $('#home').on('click', function () {
+  changeActiveIndicator('fiction');
   showHomePage('fiction');
 });
 
 $('#best2018').on('click', function () {
-  listAllCategories();
+  if (!onListingPage) {
+    listAllCategories();
+    onListingPage = true;
+  }
 });
 
 function showHomePage(category) {
@@ -42,6 +51,7 @@ function showHomePage(category) {
   getBooks(category, (data) => {
     changeCategory(category, data, $row)
   });
+  onListingPage = false;
 }
 
 function listAllCategories() {
@@ -90,19 +100,35 @@ $('#categories div').on('click', function () {
   });
 });
 
+function changeActiveIndicator(category) {
+  $('.active').removeClass('active');
+  if (category == 'mystery&thriller') {
+    $('#mystery').addClass('active');
+  } else {
+    $('#' + category).addClass('active');
+  }
+}
+
 function changeCategory(category, books, row) {
-  var $covers = row.find('.cover');
-  for (let i = 0; i < 5; i++) {
-    var cover = books[i].cover;
-    $covers.eq(i).attr('src', cover).attr('id', `${category + "_" + i}`);
-  };
+  if (typeof books == 'string') {
+    row.html(books);
+  } else {
+    var $covers = row.find('.cover');
+    for (let i = 0; i < 5; i++) {
+      var cover = books[i].cover;
+      $covers.eq(i).attr('src', cover).attr('id', `${category + "_" + i}`);
+    };
+  }
+
 };
+
 /************************** Funtions for book detail  ******************************/
 
 // Books onclick listener
 $('#rows').on('click', '.book', function () {
   var category = $(this).children().attr('id').split('_')[0];
   showHomePage(category);
+  changeActiveIndicator(category);
   displayBookDetail($(this))
 });
 
@@ -132,12 +158,12 @@ function createBookDetail(book) {
     lengthLimit = 800;
   }
 
-  getBooks(category, (books) => {
-    var description = books[index].description;
+  getBookDetail(category, index, (bookDetail) => {
+    var description = bookDetail.description;
 
     $bookDetail.append(`<img src="${book.children().attr('src')}"></div>`)
-      .append(`<p class="title">${books[index].title}</p>`)
-      .append(`<p class="author">By ${books[index].author}</p>`);
+      .append(`<p class="title">${bookDetail.title}</p>`)
+      .append(`<p class="author">By ${bookDetail.author}</p>`);
 
     if (description.length < lengthLimit) {
       $bookDetail.append(`<p class="description">${description}</p>`);
@@ -166,13 +192,40 @@ $('#showcase').on('click', '.less', function () {
   $('.description').text(newText).append('<span class="more">...more</span>');
 });
 
-// AJAX call
+/********************************** AJAX calls *************************************/
 function getBooks(category, callback) {
+  let format = 'json';
+  if (category == 'horror' || category == 'fantasy') {
+    format = 'html';
+  }
+
   $.ajax({
     url: "/get_bookList",
+    dataType: format,
+    type: "GET",
+    data: {
+      format: format,
+      category: category
+    },
+    success: function (data) {
+      console.log("SUCCESS:", data);
+      callback(data);
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.log("ERROR:", jqXHR, textStatus, errorThrown);
+    }
+  });
+}
+
+function getBookDetail(category, index, callback) {
+  $.ajax({
+    url: "/get_bookDetail",
     dataType: "json",
     type: "GET",
-    data: { category: category },
+    data: {
+      category: category,
+      index: index
+    },
     success: function (data) {
       console.log("SUCCESS:", data);
       callback(data);

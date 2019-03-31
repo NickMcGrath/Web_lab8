@@ -20,9 +20,11 @@ $.ajax({
 
 
 /************************ Functions for nav bar items **************************/
+$('#icon').on('click', function () {
+  showHomePage('fiction');
+});
+
 $('#home').on('click', function () {
-  $showcase.empty().append('<h1>Meet your next favorite book.</h1>')
-    .css('background', 'none');
   showHomePage('fiction');
 });
 
@@ -31,6 +33,8 @@ $('#best2018').on('click', function () {
 });
 
 function showHomePage(category) {
+  $showcase.empty().append('<h1>Meet your next favorite book.</h1>')
+    .css('background', 'none');
   $showcase.show();
   $('#categories').show();
   var $row = $('.row').eq(0);
@@ -97,9 +101,9 @@ function changeCategory(category, books, row) {
 
 // Books onclick listener
 $('#rows').on('click', '.book', function () {
-  displayBookDetail($(this))
   var category = $(this).children().attr('id').split('_')[0];
   showHomePage(category);
+  displayBookDetail($(this))
 });
 
 var $showcase = $('#showcase');

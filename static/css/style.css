@@ -20,13 +20,19 @@ nav {
   border-bottom: 1px solid rgb(255, 255, 255, 0.5);
 }
 
-nav img {
+#icon {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+#icon img {
   width: 60px;
   height: 60px;
   padding-left: 50px;
 }
 
-nav p {
+#icon p {
   flex-grow: 1;
   font-size: 20px;
   padding-left: 10px;
@@ -70,7 +76,6 @@ nav ul li {
 #book_detail {
   height: 100%;
   width: 80%;
-  min-width: 500px;
   margin: 0 auto;
   padding: 30px 50px;
   height: auto;
@@ -172,14 +177,14 @@ nav ul li {
 
 @media only screen and (max-width: 750px) {
   nav {
-    height: 50px;
+    height: 45px;
   }
-  nav img {
-    width: 50px;
-    height: 50px;
+  #icon img {
+    width: 40px;
+    height: 40px;
   }
-  nav p {
-    font-size: 18px;
+  #icon p {
+    font-size: 17px;
   }
   nav ul li {
     font-size: 14px;
@@ -213,6 +218,9 @@ nav ul li {
 }
 
 @media only screen and (max-width: 600px) {
+  #home {
+    display: none;
+  }
   #showcase {
     min-height: 280px;
   }
@@ -221,12 +229,13 @@ nav ul li {
   }
   .title {
     padding-top: 40px;
-
-  }
-  .author {
   }
   .description {
     padding-top: 20px;
     clear: both;
+  }
+  .category {
+    height: 28px;
+    font-size: 15px;
   }
 }

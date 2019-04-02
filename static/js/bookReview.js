@@ -167,6 +167,10 @@ function createBookDetail(book) {
 
     if (description.length < lengthLimit) {
       $bookDetail.append(`<p class="description">${description}</p>`);
+      $('.description').hide().fadeIn(500);
+      $('#book_detail img').hide().fadeIn(500);
+      $('.title').hide().fadeIn(500);
+      $('.author').hide().fadeIn(500);
     } else {
       var descriptionPart1 = description.substring(0, lengthLimit);
       var descriptionPart2 = description.substring(lengthLimit, description.length);
@@ -175,6 +179,10 @@ function createBookDetail(book) {
         .append(`<p id="hidden_description">${descriptionPart2}</p>`);
 
       $bookDetail.find('#hidden_description').css('display', 'none');
+      $('.description').hide().fadeIn(500);
+      $("#book_detail img").hide().fadeIn(500);
+      $('.title').hide().fadeIn(500);
+      $('.author').hide().fadeIn(500);
     };
   });
 };
